@@ -11,10 +11,6 @@ const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
-// ================================
-// ROUTES
-// ================================
-
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const studentRoutes = require("./routes/studentRoutes");
@@ -33,18 +29,9 @@ const adminRoutes = require("./routes/adminRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 
-// ================================
-// APP
-// ================================
-
 const app = express();
 
-const PORT =
-  process.env.PORT || 5000;
-
-// ================================
-// MIDDLEWARE
-// ================================
+const PORT = process.env.PORT || 3001;
 
 app.use(
   cors({
@@ -65,162 +52,53 @@ app.use(
 
 app.use(cookieParser());
 
-// ================================
-// API ROUTES
-// ================================
-
-app.use(
-  "/api/auth",
-  authRoutes
-);
-
-app.use(
-  "/api/dashboard",
-  dashboardRoutes
-);
-
-app.use(
-  "/api/students",
-  studentRoutes
-);
-
-app.use(
-  "/api/teachers",
-  teacherRoutes
-);
-
-app.use(
-  "/api/classes",
-  classRoutes
-);
-
-app.use(
-  "/api/subjects",
-  subjectRoutes
-);
-
-app.use(
-  "/api/timetable",
-  timetableRoutes
-);
-
-app.use(
-  "/api/attendance",
-  attendanceRoutes
-);
-
-app.use(
-  "/api/fees",
-  feeRoutes
-);
-
-app.use(
-  "/api/exams",
-  examRoutes
-);
-
-app.use(
-  "/api/results",
-  resultRoutes
-);
-
-app.use(
-  "/api/notices",
-  noticeRoutes
-);
-
-app.use(
-  "/api/academic-sessions",
-  academicSessionRoutes
-);
-
-app.use(
-  "/api/reports",
-  reportRoutes
-);
-
-app.use(
-  "/api/admin",
-  adminRoutes
-);
-
-app.use(
-  "/api/settings",
-  settingsRoutes
-);
-
-app.use(
-  "/api/notifications",
-  notificationRoutes
-);
-
-// ================================
-// ROOT
-// ================================
+app.use("/api/auth", authRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
+app.use("/api/classes", classRoutes);
+app.use("/api/subjects", subjectRoutes);
+app.use("/api/timetable", timetableRoutes);
+app.use("/api/attendance", attendanceRoutes);
+app.use("/api/fees", feeRoutes);
+app.use("/api/exams", examRoutes);
+app.use("/api/results", resultRoutes);
+app.use("/api/notices", noticeRoutes);
+app.use("/api/academic-sessions", academicSessionRoutes);
+app.use("/api/reports", reportRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/settings", settingsRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
-    message:
-      "Future Skill Management API is running",
+    message: "Future Skill Management API is running",
   });
 });
 
-// ================================
-// DATABASE
-// ================================
-
 const connectDatabase = async () => {
   try {
-    await mongoose.connect(
-      process.env.MONGO_URI
-    );
+    await mongoose.connect(process.env.MONGO_URI);
 
-    console.log(
-      "================================="
-    );
-
-    console.log(
-      "✅ MongoDB Connected Successfully"
-    );
-
-    console.log(
-      "================================="
-    );
+    console.log("=================================");
+    console.log("✅ MongoDB Connected Successfully");
+    console.log("=================================");
   } catch (error) {
-    console.error(
-      "❌ MongoDB Connection Failed"
-    );
-
+    console.error("❌ MongoDB Connection Failed");
     console.error(error.message);
-
     process.exit(1);
   }
 };
-
-// ================================
-// SERVER
-// ================================
 
 const startServer = async () => {
   await connectDatabase();
 
   app.listen(PORT, () => {
-    console.log(
-      "================================="
-    );
-
-    console.log(
-      "🚀 Future Skill Management"
-    );
-
-    console.log(
-      `🌐 Server: http://localhost:${PORT}`
-    );
-
-    console.log(
-      "================================="
-    );
+    console.log("=================================");
+    console.log("🚀 Future Skill Management");
+    console.log(`🌐 Server: http://localhost:${PORT}`);
+    console.log("=================================");
   });
 };
 
